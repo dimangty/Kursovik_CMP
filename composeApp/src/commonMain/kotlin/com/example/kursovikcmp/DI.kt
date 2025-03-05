@@ -1,6 +1,7 @@
 package com.example.kursovikcmp
 
 import com.example.kursovikcmp.DI.NetworkModule
+import com.example.kursovikcmp.DI.StorageModule
 import com.example.kursovikcmp.DI.ViewModelsModule
 import com.example.kursovikcmp.Network.NetworkSettings
 import com.example.kursovikcmp.common.mvvm.LceStateManager
@@ -43,7 +44,8 @@ inline fun <reified T> getKoinInstance(qualifier: Qualifier? = null) : T {
 
 val sharedModule: Module
     get() = module {
-        includes(commonModule + NetworkCompositeModule + ViewModelsModule.viewModels)
+        includes(commonModule + NetworkCompositeModule + ViewModelsModule.viewModels
+                + StorageCompositeModule + platformModule)
     }
 
 internal val commonModule = module {
@@ -66,3 +68,9 @@ internal val commonModule = module {
 internal val NetworkCompositeModule: Module = module {
     includes(NetworkModule.json, NetworkModule.httpClient, NetworkModule.api)
 }
+
+internal val StorageCompositeModule: Module = module {
+    includes(StorageModule.dbModule, StorageModule.daoModule, StorageModule.repositoryModule)
+}
+
+internal expect val platformModule: Module

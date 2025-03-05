@@ -3,6 +3,7 @@ package com.example.kursovikcmp.feature.News.List
 import com.example.kursovikcmp.Network.ApiErrorWrapper
 import com.example.kursovikcmp.base.mvvm.BaseViewModel
 import com.example.kursovikcmp.common.view.updateValue
+import com.example.kursovikcmp.feature.Favorites.FavoritesRepository
 import com.example.kursovikcmp.feature.News.List.Model.Article
 import com.example.kursovikcmp.feature.News.List.Model.NewsList
 import com.example.kursovikcmp.feature.News.List.Model.toDateString
@@ -14,7 +15,9 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class NewsListViewModel(private val newsService: NewsService): BaseViewModel<NewsListState, NewsListEvents>() {
+class NewsListViewModel(private val newsService: NewsService,
+                        private val favoritesRepository: FavoritesRepository): BaseViewModel<NewsListState, NewsListEvents>() {
+
 
     var favorites: MutableList<Article> = mutableListOf()
     var news: MutableList<Article> = mutableListOf()
@@ -49,11 +52,15 @@ class NewsListViewModel(private val newsService: NewsService): BaseViewModel<New
             is NewsListEvents.OnItemClicked -> {
                 //navigate(NavigationAction.NavigateToNewsDetails(event.title))
             }
+
+            is NewsListEvents.OnFavoriteClicked -> {
+                viewModelScope.launch { updateFavorite(event.title) }
+            }
         }
     }
 
     private fun loadFavoriteNews() {
-        favorites = mutableListOf() //favoritesRepository.getAllFlow().toMutableList()
+        favorites = favoritesRepository.getAllFlow().toMutableList()
     }
 
 
@@ -103,19 +110,18 @@ class NewsListViewModel(private val newsService: NewsService): BaseViewModel<New
     }
 
     private suspend fun updateFavorite(title: String) {
-//        val check = favoritesRepository.check(title)
-//        if (!check) {
-//            val item = news.find { it.title == title}
-//            if (item != null) {
-//                favoritesRepository.insert(item)
-//            }
-//        } else {
-//            favoritesRepository.delete(title)
-//        }
-//
-//        delay(100)
-//        loadFavoriteNews()
-//        updateState { copy(newsItems = news.mapToUiItems()) }
+        val check = favoritesRepository.check(title)
+        if (!check) {
+            val item = news.find { it.title == title}
+            if (item != null) {
+                favoritesRepository.insert(item)
+            }
+        } else {
+            favoritesRepository.delete(title)
+        }
+
+        loadFavoriteNews()
+        updateState { copy(newsItems = news.mapToUiItems()) }
     }
 
 }

@@ -40,19 +40,19 @@ private fun LceStateHandlerView(
     when (val errorState = lceState.errorState) {
         null -> Unit
         is ErrorState.ApiAlertError -> {
-//            MyErrorDialog(state = errorState) {
-//
-//            }
+            MyErrorDialog(state = errorState) {
+
+            }
         }
 
         is ErrorState.AlertError -> {
-//            MyAlertDialog(state = errorState) {
-//
-//            }
+            MyAlertDialog(state = errorState) {
+
+            }
         }
     }
 
-//    if (lceState.isLoading) {
-//        LoadingDialog()
-//    }
+    if (lceState.isLoading) {
+        LoadingDialog()
+    }
 }

@@ -1,4 +1,14 @@
 package com.example.kursovikcmp.feature.Favorites
 
-class FavoriteRepository {
+import com.example.kursovikcmp.DB.ArticleDao
+import com.example.kursovikcmp.feature.News.List.Model.Article
+
+class FavoritesRepository(
+    private val dao: ArticleDao
+) {
+    fun getAllFlow() = dao.getAll()
+    suspend fun get(title: String) = dao.get(title)
+    suspend fun insert(article: Article)  = dao.insert(article)
+    suspend fun delete(title: String)  = dao.delete(title)
+    suspend fun check(title: String) = dao.check(title)
 }

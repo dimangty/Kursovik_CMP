@@ -48,7 +48,9 @@ fun NewsScreenView(state: NewsListState,
                     onClicked = {
                         onUiEvent(NewsListEvents.OnItemClicked(article.title))
                     },
-                    onFavorite = { })
+                    onFavorite = {
+                        onUiEvent(NewsListEvents.OnFavoriteClicked(article.title))
+                    })
                 VSpacer(8.dp)
             }
         }

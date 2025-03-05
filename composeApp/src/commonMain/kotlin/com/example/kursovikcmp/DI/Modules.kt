@@ -1,7 +1,11 @@
 package com.example.kursovikcmp.DI
 
+import com.example.kursovikcmp.DB.ArticleDao
+import com.example.kursovikcmp.DB.DatabaseDriverFactory
+import com.example.kursovikcmp.Database
 import com.example.kursovikcmp.Network.DateSerializer
 import com.example.kursovikcmp.Network.DateTimeSerializer
+import com.example.kursovikcmp.feature.Favorites.FavoritesRepository
 import com.example.kursovikcmp.feature.News.List.NewsListViewModel
 import com.example.kursovikcmp.feature.News.NewsService
 import io.ktor.client.HttpClient
@@ -53,9 +57,25 @@ object NetworkModule {
 
 }
 
+object StorageModule {
+    val dbModule = module {
+        single<Database> {
+            Database(get<DatabaseDriverFactory>().create())
+        }
+    }
+
+    val daoModule = module {
+        single<ArticleDao> { ArticleDao(get<Database>(), get()) }
+    }
+
+    val repositoryModule = module {
+        single { FavoritesRepository(get<ArticleDao>()) }
+    }
+}
+
 
 object ViewModelsModule {
     val viewModels = module {
-        single { NewsListViewModel(get()) }
+        single { NewsListViewModel(get(), get()) }
     }
 }
