@@ -27,7 +27,7 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
-            isStatic = true
+            isStatic = false
         }
     }
     
@@ -38,6 +38,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.sqldelight.android.driver)
             implementation(libs.koin.android)
+            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.okhttp)
         }
 
         commonMain.dependencies {
@@ -67,12 +69,12 @@ kotlin {
             implementation(libs.datetime)
 
             //Moko
-            api(libs.moko.resources)
+            //api(libs.moko.resources)
             api(libs.moko.resources.compose)
 
             //Coil
-            //implementation(libs.coil.compose)
-
+            implementation(libs.coil)
+            implementation(libs.coil.network)
             //TouchLab
 
             implementation(libs.touchLab)
@@ -82,6 +84,7 @@ kotlin {
             implementation(libs.sqldelight.native.driver)
             //Network
             implementation(libs.ktor.client.ios)
+            implementation(libs.ktor.client.darwin)
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.example.kursovikcmp.DI
 
-import com.example.kursovikcmp.DI.NetworkModule.json
 import com.example.kursovikcmp.Network.DateSerializer
 import com.example.kursovikcmp.Network.DateTimeSerializer
+import com.example.kursovikcmp.feature.News.List.NewsListViewModel
 import com.example.kursovikcmp.feature.News.NewsService
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -51,4 +51,11 @@ object NetworkModule {
 
     val api = module { single { NewsService(get(), get()) } }
 
+}
+
+
+object ViewModelsModule {
+    val viewModels = module {
+        single { NewsListViewModel(get()) }
+    }
 }

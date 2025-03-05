@@ -1,8 +1,10 @@
-package com.example.kursovikcmp.common.view
+package com.example.kursovikcmp.common.mvvm
 
 
 import com.example.kursovikcmp.MR
-import com.example.kursovikcmp.base.DefaultUiEvent
+import com.example.kursovikcmp.base.mvvm.DefaultUiEvent
+import com.example.kursovikcmp.common.view.TextState
+import com.example.kursovikcmp.common.view.getMock
 import dev.icerock.moko.resources.ColorResource
 import dev.icerock.moko.resources.ImageResource
 

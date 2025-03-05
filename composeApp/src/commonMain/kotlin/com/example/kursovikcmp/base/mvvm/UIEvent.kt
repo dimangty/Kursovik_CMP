@@ -1,4 +1,4 @@
-package com.example.kursovikcmp.base
+package com.example.kursovikcmp.base.mvvm
 
 interface UiEvent
 
