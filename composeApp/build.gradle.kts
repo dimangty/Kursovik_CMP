@@ -7,6 +7,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.sqldelight)
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
@@ -33,8 +36,14 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.sqldelight.android.driver)
+            implementation(libs.koin.android)
         }
+
         commonMain.dependencies {
+            //Sqldelight
+            implementation(libs.sqldelight.coroutines.extensions)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -43,6 +52,36 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            //Koin
+            implementation(libs.koin.core)
+
+            //Network
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.kotlinx.serialization.core)
+
+            //Datetime
+            implementation(libs.datetime)
+
+            //Moko
+            api(libs.moko.resources)
+            api(libs.moko.resources.compose)
+
+            //Coil
+            //implementation(libs.coil.compose)
+
+            //TouchLab
+
+            implementation(libs.touchLab)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.sqldelight.native.driver)
+            //Network
+            implementation(libs.ktor.client.ios)
         }
     }
 }
@@ -78,3 +117,17 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("com.example.kursovikcmp")
+            generateAsync.set(true)
+        }
+    }
+    linkSqlite = true
+}
+
+multiplatformResources {
+    resourcesPackage.set("com.example.kursovikcmp")
+}
