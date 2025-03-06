@@ -6,6 +6,7 @@ import com.example.kursovikcmp.DI.ViewModelsModule
 import com.example.kursovikcmp.Network.NetworkSettings
 import com.example.kursovikcmp.common.mvvm.LceStateManager
 import com.example.kursovikcmp.feature.News.NewsService
+import com.example.kursovikcmp.navigation.NavigationService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -63,6 +64,7 @@ internal val commonModule = module {
 
     factoryOf(::LceStateManager)
     singleOf(::NetworkSettings)
+    singleOf(::NavigationService)
 }
 
 internal val NetworkCompositeModule: Module = module {

@@ -8,5 +8,8 @@ sealed class NavigationAction {
     class NavigateToNewsDetails(val title: String) : NavigationAction()
 
     @Serializable
+    class NavigateToFavoritesDetails(val title: String) : NavigationAction()
+
+    @Serializable
     data object NavigateBack : NavigationAction()
 }

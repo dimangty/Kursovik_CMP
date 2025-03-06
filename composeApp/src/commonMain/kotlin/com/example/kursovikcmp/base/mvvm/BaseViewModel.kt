@@ -3,6 +3,9 @@ package com.example.kursovikcmp.base.mvvm
 import androidx.lifecycle.ViewModel
 import com.example.kursovikcmp.common.mvvm.ErrorState
 import com.example.kursovikcmp.common.mvvm.LceStateManager
+import com.example.kursovikcmp.feature.Device.DeviceService
+import com.example.kursovikcmp.navigation.NavigationAction
+import com.example.kursovikcmp.navigation.NavigationService
 import com.example.kursovikkmp.shared.common.extension.asCommonFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -23,8 +26,8 @@ import kotlin.native.ObjCName
 abstract class BaseViewModel<State: BaseViewState, Event: BaseEvent> : ViewModel() {
 
     val viewModelScope = CoroutineScope(SupervisorJob())
-//    private val navigationService by getKoin().inject<NavigationService>()
-//    val deviceService by getKoin().inject<DeviceService>()
+    private val navigationService by getKoin().inject<NavigationService>()
+    val deviceService by getKoin().inject<DeviceService>()
 
     val stateFlow = MutableStateFlow(initialState())
     val state: State get() = stateFlow.value
@@ -135,24 +138,12 @@ abstract class BaseViewModel<State: BaseViewState, Event: BaseEvent> : ViewModel
         initScreenData()
     }
 
-//    protected fun navigate(navigationAction: NavigationAction) {
-//        navigationService.navigate(navigationAction)
-//
-//        if (deviceService.isIOS()) {
-//            viewModelScope.launch {
-//                _navigationEffect.emit(navigationAction)
-//            }
-//        }
-//    }
-//
+    protected fun navigate(navigationAction: NavigationAction) {
+        navigationService.navigate(navigationAction)
+    }
+
     protected open fun navigateBack() {
-//        navigationService.navigateBack()
-//
-//        if (deviceService.isIOS()) {
-//            viewModelScope.launch {
-//                _navigationEffect.emit(NavigationAction.NavigateBack)
-//            }
-//        }
+        navigationService.navigateBack()
     }
 
     abstract fun initialState(): State

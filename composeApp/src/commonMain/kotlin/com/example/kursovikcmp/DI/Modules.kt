@@ -5,8 +5,10 @@ import com.example.kursovikcmp.DB.DatabaseDriverFactory
 import com.example.kursovikcmp.Database
 import com.example.kursovikcmp.Network.DateSerializer
 import com.example.kursovikcmp.Network.DateTimeSerializer
+import com.example.kursovikcmp.feature.Favorites.Details.FavoriteDetailsViewModel
 import com.example.kursovikcmp.feature.Favorites.FavoritesRepository
 import com.example.kursovikcmp.feature.Favorites.List.FavoritesListViewModel
+import com.example.kursovikcmp.feature.News.Details.NewsDetailsViewModel
 import com.example.kursovikcmp.feature.News.List.NewsListViewModel
 import com.example.kursovikcmp.feature.News.NewsService
 import io.ktor.client.HttpClient
@@ -79,5 +81,7 @@ object ViewModelsModule {
     val viewModels = module {
         single { NewsListViewModel(get(), get()) }
         single { FavoritesListViewModel(get()) }
+        factory { NewsDetailsViewModel(get(), get(), get()) }
+        factory { FavoriteDetailsViewModel(get(), get()) }
     }
 }

@@ -13,15 +13,20 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.kursovikcmp.feature.Favorites.Details.Compose.FavoriteDetailsScreen
 import com.example.kursovikcmp.feature.Favorites.List.Compose.FavoriteScreen
+import com.example.kursovikcmp.feature.News.Details.Compose.NewsDetailsScreen
 import com.example.kursovikcmp.feature.News.List.Compose.NewsScreen
+import com.example.kursovikcmp.getKoinInstance
 import com.example.kursovikcmp.navigation.NavigationAction
+import com.example.kursovikcmp.navigation.NavigationService
 
 @Composable
 fun BottomNavigationBar() {
@@ -29,11 +34,13 @@ fun BottomNavigationBar() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     var selectedItem by remember { mutableIntStateOf(0) }
+    val navigationService: NavigationService = getKoinInstance()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            NavigationBar {
+            NavigationBar(containerColor = Color.White) {
+                navigationService.setNavController(navController)
                 BottomNavigationItem().bottomNavigationItems().forEachIndexed { index, navigationItem ->
                     NavigationBarItem(
                         selected = index == selectedItem,
@@ -74,7 +81,12 @@ fun BottomNavigationBar() {
 
             composable<NavigationAction.NavigateToNewsDetails> {
                 val args = it.toRoute<NavigationAction.NavigateToNewsDetails>()
-                NewsScreen()
+                NewsDetailsScreen(args.title)
+            }
+
+            composable<NavigationAction.NavigateToFavoritesDetails> {
+                val args = it.toRoute<NavigationAction.NavigateToFavoritesDetails>()
+                FavoriteDetailsScreen(args.title)
             }
         }
     }

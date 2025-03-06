@@ -8,6 +8,7 @@ import com.example.kursovikcmp.feature.News.List.Model.Article
 import com.example.kursovikcmp.feature.News.List.Model.NewsList
 import com.example.kursovikcmp.feature.News.List.Model.toDateString
 import com.example.kursovikcmp.feature.News.NewsService
+import com.example.kursovikcmp.navigation.NavigationAction
 import io.ktor.client.call.body
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
@@ -50,7 +51,7 @@ class NewsListViewModel(private val newsService: NewsService,
     override fun onEvent(event: NewsListEvents) {
         when(event){
             is NewsListEvents.OnItemClicked -> {
-                //navigate(NavigationAction.NavigateToNewsDetails(event.title))
+                navigate(NavigationAction.NavigateToNewsDetails(event.title))
             }
 
             is NewsListEvents.OnFavoriteClicked -> {

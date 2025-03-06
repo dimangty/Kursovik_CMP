@@ -42,7 +42,7 @@ class FavoritesListViewModel(private val favoritesRepository: FavoritesRepositor
             }
 
             is FavoritesListEvents.OnItemClicked -> {
-                //navigate(NavigationAction.NavigateToFavoritesDetails(event.title))
+                navigate(NavigationAction.NavigateToFavoritesDetails(event.title))
             }
         }
     }
