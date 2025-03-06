@@ -28,7 +28,6 @@ sealed class ErrorState {
         val negativeButtonText: String = "Cancel",
         val negativeAction: () -> Unit = {}
     ) : ErrorState() {
-
         companion object {
             fun getMock() = AlertError(title = "Title", message = "Message")
         }

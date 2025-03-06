@@ -75,9 +75,16 @@ kotlin {
             //Coil
             implementation(libs.coil)
             implementation(libs.coil.network)
-            //TouchLab
 
+            //TouchLab
             implementation(libs.touchLab)
+
+            //Navigation
+            implementation(libs.navigation.compose)
+
+            // Material 3
+            implementation(compose.material3)
+
         }
 
         iosMain.dependencies {
